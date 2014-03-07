@@ -216,13 +216,13 @@ public class MainActivity extends Activity {
         buttonTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //execute======================================================>>>>>>>>>>>>>>>>>>>>>>
+                //execute======================================================>>>>>>>>>>>>>>>>>>>>>>##
 
                 Toast.makeText(MainActivity.this, getString(R.string.reboot_title), Toast.LENGTH_SHORT).show();
                 CommandCapture command = new CommandCapture(0, "reboot");
                 try{ RootTools.getShell(true).add(command).wait(); }
                 catch (Exception e) { Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show(); }
-                //=============================================================<<<<<<<<<<<<<<<<<<<<<<
+                //=============================================================<<<<<<<<<<<<<<<<<<<<<<##
                 alertdialog.dismiss();
             }
         });
