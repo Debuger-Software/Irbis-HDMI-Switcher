@@ -61,7 +61,6 @@ public class MainActivity extends Activity {
         File ir_en = new File("/mnt/sdcard/IrbisHdmiSwitcher/enable");
         File ir_ds = new File("/mnt/sdcard/IrbisHdmiSwitcher/disable");
 
-
         if (!en_hd.exists() || !en_hw.exists() || !ds_hd.exists() || !ds_hw.exists()) {
             if (ir_dr.exists()) {
                 long startTime = System.currentTimeMillis();
@@ -82,15 +81,12 @@ public class MainActivity extends Activity {
                 displayDialog("ERROR", getString(R.string.no_network), true);
             }
         }
-
-
     }
 
     public void changeHdmi(View view) {
         Switch hdmiswitch = (Switch) findViewById(R.id.switch1);
         boolean hdmiState = hdmiswitch.isChecked();
 
-        //if (hdmiState) {Toast.makeText(this, "ENABLE", Toast.LENGTH_SHORT).show();} else {Toast.makeText(this, "DISABLE", Toast.LENGTH_SHORT).show();}
         if (hdmiState) {
             File cur_hdmi = new File(CURRENT_HDMI_LIB);
             File cur_comp = new File(CURRENT_HWCOMPOSER);
@@ -145,7 +141,6 @@ public class MainActivity extends Activity {
         System.exit(0);
     }
 
-
     public void displayDialog(String sTitle, String sMsg){
         final Dialog alertdialog = new Dialog(MainActivity.this);
         alertdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -164,6 +159,7 @@ public class MainActivity extends Activity {
         });
         alertdialog.show();
     }
+
     public void displayDialog(String sTitle, String sMsg, boolean exitdiag){
         final Dialog alertdialog = new Dialog(MainActivity.this);
         alertdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -203,26 +199,21 @@ public class MainActivity extends Activity {
         buttonOne.setText(R.string.no);
         Button buttonTwo = (Button) alertdialog.findViewById(R.id.button2);
         buttonTwo.setText(R.string.yes);
-
         alertText.setTextColor(Color.WHITE);
-
         buttonOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertdialog.dismiss();
             }
         });
-
         buttonTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //execute======================================================>>>>>>>>>>>>>>>>>>>>>>##
 
                 Toast.makeText(MainActivity.this, getString(R.string.reboot_title), Toast.LENGTH_SHORT).show();
                 CommandCapture command = new CommandCapture(0, "reboot");
                 try{ RootTools.getShell(true).add(command).wait(); }
                 catch (Exception e) { Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show(); }
-                //=============================================================<<<<<<<<<<<<<<<<<<<<<<##
                 alertdialog.dismiss();
             }
         });
@@ -256,7 +247,6 @@ public class MainActivity extends Activity {
             while ((current = bis.read()) != -1) {
                 baf.append((byte) current);
             }
- 
 
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(baf.toByteArray());
