@@ -105,6 +105,14 @@ public class MainActivity extends Activity {
 
             ExecuteRoot("cp " + hdmi + " " + cur_hdmi);
             ExecuteRoot("cp " + hwcm + " " + cur_comp);
+
+            while (!cur_hdmi.exists() || !cur_comp.exists()) {
+                //pass
+            }
+
+            ExecuteRoot("chmod 644 " + cur_hdmi);
+            ExecuteRoot("chmod 644 " + cur_comp);
+
             SharedPreferences.Editor preferencesEditor = settings.edit();
             preferencesEditor.putBoolean("hdmistate", true).commit();
             //ExecuteRoot("reboot");
@@ -127,6 +135,14 @@ public class MainActivity extends Activity {
             }
             ExecuteRoot("cp " + hdmi + " " + cur_hdmi);
             ExecuteRoot("cp " + hwcm + " " + cur_comp);
+
+            while (!cur_hdmi.exists() || !cur_comp.exists()) {
+                //pass
+            }
+
+            ExecuteRoot("chmod 644 " + cur_hdmi);
+            ExecuteRoot("chmod 644 " + cur_comp);
+
             SharedPreferences.Editor preferencesEditor = settings.edit();
             preferencesEditor.putBoolean("hdmistate", false).commit();
             //ExecuteRoot("reboot");
