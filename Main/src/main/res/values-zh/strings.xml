@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Irbis HDMI Switcher</string>
+    <string name="app_descr">该应用程序是用于启用/停用HDMI操作系统。\ NIT是一样的，在系统设置开关。\ n如果HDMI被关闭在这个应用平板电脑将不支持HDMI接口。\ n \ n已禁用的HDMI系统略有但仍提高它的性能，建议您使用此选项，当你不打算使用HDMI连接。\n\n更改此设置要求设备重新启动，请记住，你可以在任何时候更改它们。</string>
+    <string name="hdmi_enabled">HDMI enabled</string>
+    <string name="hdmi_disabled">HDMI disabled</string>
+    <string name="noroot">不获准 !</string>
+    <string name="reboot_title">重新开始</string>
+    <string name="confirm">为使更改生效，必须重新启动设备。你现在要做到这一点？</string>
+    <string name="yes">所以</string>
+    <string name="no">不</string>
+    <string name="download_error">同时下载需要的文件错误。请重新启动应用的新！</string>
+    <string name="no_network">需要互联网连接来下载库！启用Internet连接并重新启动应用程序。</string>
+</resources>

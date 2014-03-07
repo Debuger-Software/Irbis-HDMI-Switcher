@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Irbis HDMI Switcher</string>
+    <string name="app_descr">This app can enable/disable HDMI support in Irbis ROM.\nThis is not the HDMI switch on/off like the switch in system settings.\nIf you switch HDMI to disable in this app then your device is not support HDMI.\n\nDisable HDMI support in this ROM slightly but still raises the system performance, it is recommended when you don\'t use HDMI all the time.\n\nIf this settings is changed, device reboot is required, remember - you can chcange this settings at any time.</string>
+    <string name="hdmi_enabled">HDMI enabled</string>
+    <string name="hdmi_disabled">HDMI disabled</string>
+    <string name="noroot">SuperUser permissions revoked !</string>
+    <string name="reboot_title">Reboot</string>
+    <string name="confirm">To apply changes device must be rebooted. Reboot now ?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="download_error">Error while downloading required file(s). Please restart appliction !</string>
+    <string name="no_network">Internet connection is required to download HDMI libraries (~65KB)! Enable internet connection and restart app.</string>
+</resources>

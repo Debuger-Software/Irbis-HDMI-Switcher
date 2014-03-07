@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#252525"
+              android:minWidth="200dp">
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Medium Text"
+            android:id="@+id/textView2"
+            android:layout_gravity="center"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:drawableLeft="@drawable/ic_launcher"
+            android:drawableRight="@drawable/ic_launcher"
+            android:textColor="#3fa9d0"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:text=""
+            android:id="@+id/textView"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:singleLine="false"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="5dp"/>
+
+    <Button
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="OK"
+            android:id="@+id/button"
+            android:layout_gravity="center"
+            android:background="@drawable/rbutton"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="15dp"/>
+</RelativeLayout>
