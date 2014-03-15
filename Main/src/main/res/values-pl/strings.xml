@@ -10,6 +10,9 @@
     <string name="confirm">Aby zmiany odniosły skutek należy zrestartować urządzenie. Czy chcesz wykonać resrt teraz ?</string>
     <string name="yes">TAK</string>
     <string name="no">NIE</string>
-    <string name="download_error">Błąd podczas pobierania wymaganych plików. Upewnij się że posiadasz stabilne połączenie z internetem i zrestartuj aplikację.</string>
+    <string name="download_error">Błąd podczas pobierania wymaganych plików. Upewnij się że posiadasz stabilne połączenie z internetem i zrestartuj aplikację. Mógł wystąpić chwilowy problem z serwerem pobierania, spróbuj ponownie za 10 min.</string>
     <string name="no_network">Wymagane jest połączenie z internetem by pobrać wymagane biblioteki HDMI (ok. 65 KB). Połącz się z internetem i zrestartuj aplikację.</string>
+    <string name="donate">Postaw piwo :)</string>
+    <string name="progress_title">Pobieranie...</string>
+    <string name="progress_text">Pobieranie wymaganych bibliotek...</string>
 </resources>

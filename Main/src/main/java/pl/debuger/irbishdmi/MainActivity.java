@@ -2,13 +2,20 @@ package pl.debuger.irbishdmi;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -38,8 +45,15 @@ public class MainActivity extends Activity {
     static final String SYSTEM_LIB_HW_PATH  = "/system/lib/hw";
     static final String CURRENT_HDMI_LIB    = SYSTEM_LIB_HW_PATH + "/hdmi.ATM702X.so";
     static final String CURRENT_HWCOMPOSER  = SYSTEM_LIB_HW_PATH + "/hwcomposer.ATM702X.so";
+    final Intent SLATEDROID_INTENT          = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.slatedroid.com/topic/102945-custom-romrom-based-on-irbis-tq-72-by-firomi-hdmi-support/"));
+    final Intent ANDROIDPL_INTENT           = new Intent(Intent.ACTION_VIEW, Uri.parse("http://forum.android.com.pl/f1096/quadra-7-us-4-2-2-rom-oparty-na-irbis-tq72-antutu-13k-quadrant-6k-v2-hdmi-support-385450/"));
     static final String CONFIG              = "config";
     SharedPreferences settings;
+    ProgressDialog pd;
+    static final int NO_NETWORK             = 1;
+    static final int DOWNLOAD_ERROR         = 2;
+    static final int DOWNLOAD_OK            = 0;
+    int networkError                        = DOWNLOAD_OK;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,33 +67,33 @@ public class MainActivity extends Activity {
         if (hdmisavedstate) {hdmiswitch.setChecked(true);} else {hdmiswitch.setChecked(false);}
         if (!RootTools.isAccessGiven()) { displayDialog("ERROR", getString(R.string.noroot)); }
 
-        File en_hd = new File(ENABLE_HDMI);
-        File en_hw = new File(ENABLE_HWCOMPOSSER);
-        File ds_hd = new File(DISABLE_HDMI);
-        File ds_hw = new File(DISABLE_HWCOMPOSSER);
-        File ir_dr = new File("/mnt/sdcard/IrbisHdmiSwitcher");
-        File ir_en = new File("/mnt/sdcard/IrbisHdmiSwitcher/enable");
-        File ir_ds = new File("/mnt/sdcard/IrbisHdmiSwitcher/disable");
+        new LoadViewTask().execute();
 
-        if (!en_hd.exists() || !en_hw.exists() || !ds_hd.exists() || !ds_hw.exists()) {
-            if (ir_dr.exists()) {
-                long startTime = System.currentTimeMillis();
-                ExecuteRoot("rm -r /mnt/sdcard/IrbisHdmiSwitcher");
-                while (ir_dr.exists() && ((System.currentTimeMillis() - startTime) / 1000) < 6) {
-                    //pass
-                }
-            }
-            ir_dr.mkdirs();
-            ir_en.mkdirs();
-            ir_ds.mkdirs();
-            if (isNetworkConnected()) {
-                DownloadFromUrl("enable/hdmi.ATM702X.so", ENABLE_HDMI);
-                DownloadFromUrl("enable/hwcomposer.ATM702X.so", ENABLE_HWCOMPOSSER);
-                DownloadFromUrl("disable/hdmi.ATM702X.so", DISABLE_HDMI);
-                DownloadFromUrl("disable/hwcomposer.ATM702X.so", DISABLE_HWCOMPOSSER);
-            } else {
-                displayDialog("ERROR", getString(R.string.no_network), true);
-            }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.slatedroid:
+                startActivity(SLATEDROID_INTENT);
+                return true;
+
+            case R.id.androidpl:
+                startActivity(ANDROIDPL_INTENT);
+                return true;
+
+            case R.id.donate:
+                donateApp();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -88,64 +102,65 @@ public class MainActivity extends Activity {
         boolean hdmiState = hdmiswitch.isChecked();
 
         if (hdmiState) {
+            
             File cur_hdmi = new File(CURRENT_HDMI_LIB);
             File cur_comp = new File(CURRENT_HWCOMPOSER);
             if(cur_comp.exists()) cur_comp.delete();
             if(cur_hdmi.exists()) cur_hdmi.delete();
-
             File hdmi = new File(ENABLE_HDMI);
             File hwcm = new File(ENABLE_HWCOMPOSSER);
-
+            
             ExecuteRoot("rm -f " + cur_hdmi);
             ExecuteRoot("rm -f " + cur_comp);
-
+            
             while (cur_hdmi.exists() || cur_comp.exists()) {
-                //pass
+                Log.w("IRBIS HDMI SWITCHER", "Warning: lib(s) still exist !");
             }
-
+            
             ExecuteRoot("cp " + hdmi + " " + cur_hdmi);
             ExecuteRoot("cp " + hwcm + " " + cur_comp);
-
+            
             while (!cur_hdmi.exists() || !cur_comp.exists()) {
-                //pass
+                Log.w("IRBIS HDMI SWITCHER", "Warning: lib(s) still exist !");
             }
-
+            
             ExecuteRoot("chmod 644 " + cur_hdmi);
             ExecuteRoot("chmod 644 " + cur_comp);
-
+            
             SharedPreferences.Editor preferencesEditor = settings.edit();
             preferencesEditor.putBoolean("hdmistate", true).commit();
-            //ExecuteRoot("reboot");
             RebootDevice();
 
         } else {
+            
             File cur_hdmi = new File(CURRENT_HDMI_LIB);
             File cur_comp = new File(CURRENT_HWCOMPOSER);
             if(cur_comp.exists()) cur_comp.delete();
             if(cur_hdmi.exists()) cur_hdmi.delete();
-
+            
             File hdmi = new File(DISABLE_HDMI);
             File hwcm = new File(DISABLE_HWCOMPOSSER);
-
+            
             ExecuteRoot("rm -f " + cur_hdmi);
             ExecuteRoot("rm -f " + cur_comp);
-
+            
             while (cur_hdmi.exists() || cur_comp.exists()) {
-                //pass
+                Log.w("IRBIS HDMI SWITCHER", "Warning: lib(s) still exist !");
             }
+            
             ExecuteRoot("cp " + hdmi + " " + cur_hdmi);
             ExecuteRoot("cp " + hwcm + " " + cur_comp);
 
+            
             while (!cur_hdmi.exists() || !cur_comp.exists()) {
-                //pass
+                Log.w("IRBIS HDMI SWITCHER", "Warning: lib(s) still exist !");
             }
-
+            
             ExecuteRoot("chmod 644 " + cur_hdmi);
             ExecuteRoot("chmod 644 " + cur_comp);
-
+            
             SharedPreferences.Editor preferencesEditor = settings.edit();
             preferencesEditor.putBoolean("hdmistate", false).commit();
-            //ExecuteRoot("reboot");
             RebootDevice();
 
         }
@@ -154,7 +169,20 @@ public class MainActivity extends Activity {
     @Override
     public void onPause() {
         super.onPause();
-        System.exit(0);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
+
+    protected void onDestroy() {
+        if (pd!=null) {
+            pd.dismiss();
+        }
+        super.onDestroy();
+        finish();
     }
 
     public void displayDialog(String sTitle, String sMsg){
@@ -248,12 +276,9 @@ public class MainActivity extends Activity {
             URL url = new URL("http://debuger.pl/irbis/" + source);
             File file = new File(destination);
 
-            long startTime = System.currentTimeMillis();
-            Log.e("Download", "download begining");
-            Log.e("Download", "download url:" + url);
-            Log.e("Download", "downloaded file name:" + destination);
-
             URLConnection ucon = url.openConnection();
+            ucon.setConnectTimeout(5000);
+            ucon.setReadTimeout(5000);
 
             InputStream is = ucon.getInputStream();
             BufferedInputStream bis = new BufferedInputStream(is);
@@ -266,15 +291,90 @@ public class MainActivity extends Activity {
 
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(baf.toByteArray());
-            fos.close();
-            Log.e("Download", "download ready in"
-                    + ((System.currentTimeMillis() - startTime) / 1000)
-                    + " sec");
 
         } catch (Exception e) {
-            Log.e("Download", "Error: " + e);
-            displayDialog("ERROR", getString(R.string.download_error));
+            Log.e("Download", "Error: " + e.toString());
+            //displayDialog("ERROR", getString(R.string.download_error));
+            networkError = DOWNLOAD_ERROR;
         }
 
     }
+
+    public void donateApp() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("market://details?id=pl.debuger.donate"));
+        startActivity(intent);
+    }
+
+    private class LoadViewTask extends AsyncTask<Void, Void, Integer> {
+
+        @Override
+        protected void onPreExecute() {
+            pd = new ProgressDialog(MainActivity.this);
+            pd.setTitle(getString(R.string.progress_title));
+            pd.setMessage(getString(R.string.progress_text));
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+            pd.show();
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            File en_hd = new File(ENABLE_HDMI);
+            File en_hw = new File(ENABLE_HWCOMPOSSER);
+            File ds_hd = new File(DISABLE_HDMI);
+            File ds_hw = new File(DISABLE_HWCOMPOSSER);
+            File ir_dr = new File("/mnt/sdcard/IrbisHdmiSwitcher");
+            File ir_en = new File("/mnt/sdcard/IrbisHdmiSwitcher/enable");
+            File ir_ds = new File("/mnt/sdcard/IrbisHdmiSwitcher/disable");
+
+            if (!en_hd.exists() || !en_hw.exists() || !ds_hd.exists() || !ds_hw.exists()) {
+                Log.e("IRBIS HDMI SWITCHER", "Some req libs not found !!!");
+                if (ir_dr.exists()) {
+                    Log.e("IRBIS HDMI SWITCHER", "Irbis storage directory exist - must be removed");
+                    long startTime = System.currentTimeMillis();
+                    ExecuteRoot("rm -r /mnt/sdcard/IrbisHdmiSwitcher");
+                    while (ir_dr.exists() && ((System.currentTimeMillis() - startTime) / 1000) < 6) {
+                        Log.e("IRBIS HDMI SWITCHER", "Irbis storage directory still exist !!!");
+                        //pass
+                    }
+                }
+                
+                ir_dr.mkdirs();
+                ir_en.mkdirs();
+                ir_ds.mkdirs();
+                if (isNetworkConnected()) {
+                    
+                    DownloadFromUrl("enable/hdmi.ATM702X.so", ENABLE_HDMI);
+                    DownloadFromUrl("enable/hwcomposer.ATM702X.so", ENABLE_HWCOMPOSSER);
+                    DownloadFromUrl("disable/hdmi.ATM702X.so", DISABLE_HDMI);
+                    DownloadFromUrl("disable/hwcomposer.ATM702X.so", DISABLE_HWCOMPOSSER);
+                    
+                } else {
+                    Log.e("IRBIS HDMI SWITCHER", "Error: Device not connected to network, download aborted");
+                    //displayDialog("ERROR", getString(R.string.no_network), true);
+                    networkError = NO_NETWORK;
+
+                }
+            }
+            return networkError;
+        }
+
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            if (pd!=null) {
+                pd.dismiss();
+            }
+
+            if (networkError == NO_NETWORK) {
+                displayDialog("ERROR", getString(R.string.no_network), true);
+            } else if (networkError == DOWNLOAD_ERROR) {
+                displayDialog("ERROR", getString(R.string.download_error), true);
+            }
+
+        }
+    }
+
+
 }

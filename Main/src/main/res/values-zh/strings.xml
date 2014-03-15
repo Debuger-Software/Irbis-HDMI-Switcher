@@ -10,6 +10,9 @@
     <string name="confirm">为使更改生效，必须重新启动设备。你现在要做到这一点？</string>
     <string name="yes">所以</string>
     <string name="no">不</string>
-    <string name="download_error">同时下载需要的文件错误。请重新启动应用的新！</string>
+    <string name="download_error">同时下载需要的文件错误。请重新启动应用的新！可能是下载服务器出现暂时性的问题，再试一次在10分钟内。</string>
     <string name="no_network">需要互联网连接来下载库！启用Internet连接并重新启动应用程序。</string>
+    <string name="donate">我买啤酒</string>
+    <string name="progress_title">下载...</string>
+    <string name="progress_text">下载需要的库...</string>
 </resources>

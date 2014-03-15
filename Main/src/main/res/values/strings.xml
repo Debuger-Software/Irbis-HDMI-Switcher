@@ -10,6 +10,9 @@
     <string name="confirm">To apply changes device must be rebooted. Reboot now ?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
-    <string name="download_error">Error while downloading required file(s). Please restart appliction !</string>
+    <string name="download_error">Error while downloading required file(s). Make sure you have stable internet connection and restart appliction ! May be a temporary problem with the download server, try again in 10 minutes.</string>
     <string name="no_network">Internet connection is required to download HDMI libraries (~65KB)! Enable internet connection and restart app.</string>
+    <string name="donate">Buy me a beer :)</string>
+    <string name="progress_title">Downloading...</string>
+    <string name="progress_text">Downloading required libs...</string>
 </resources>
