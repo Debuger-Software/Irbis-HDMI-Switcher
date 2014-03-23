@@ -19,10 +19,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.adsdk.sdk.Ad;
+import com.adsdk.sdk.AdListener;
+import com.adsdk.sdk.AdManager;
+import com.adsdk.sdk.banner.AdView;
 import com.stericson.RootTools.RootTools;
 import com.stericson.RootTools.execution.CommandCapture;
 
@@ -36,7 +41,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements AdListener {
 
     static final String ENABLE_HDMI         = "/mnt/sdcard/IrbisHdmiSwitcher/enable/hdmi.ATM702X.so";
     static final String ENABLE_HWCOMPOSSER  = "/mnt/sdcard/IrbisHdmiSwitcher/enable/hwcomposer.ATM702X.so";
@@ -55,6 +60,10 @@ public class MainActivity extends Activity {
     static final int DOWNLOAD_OK            = 0;
     int networkError                        = DOWNLOAD_OK;
 
+    private RelativeLayout layout;
+    private AdView mAdView;
+    private AdManager mManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +78,32 @@ public class MainActivity extends Activity {
 
         new LoadViewTask().execute();
 
-    }
+        layout = (RelativeLayout) findViewById(R.id.adsdkContent);
 
+        mManager = new AdManager(this, "http://my.mobfox.com/vrequest.php",
+                "b52103e7be1f7a28577dda06537976eb", true);
+        mManager.setListener(this);
+
+
+
+        if (mAdView != null) {
+            removeBanner();
+        }
+
+        mAdView = new AdView(this, "http://my.mobfox.com/request.php","b52103e7be1f7a28577dda06537976eb", true, true);
+
+        mAdView.setAdspaceStrict(false); // Optional, tells the server to only supply banner ads that are exactly of the desired size. Without setting it, the server could also supply smaller Ads when no ad of desired size is available.
+
+        mAdView.setAdListener(this);
+        layout.addView(mAdView);
+
+    }
+    private void removeBanner(){
+        if(mAdView!=null){
+            layout.removeView(mAdView);
+            mAdView = null;
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -180,6 +213,11 @@ public class MainActivity extends Activity {
     protected void onDestroy() {
         if (pd!=null) {
             pd.dismiss();
+        }
+
+        mManager.release();
+        if(mAdView!=null) {
+            mAdView.release();
         }
         super.onDestroy();
         finish();
@@ -304,6 +342,31 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://details?id=pl.debuger.donate"));
         startActivity(intent);
+    }
+
+    @Override
+    public void adClicked() {
+
+    }
+
+    @Override
+    public void adClosed(Ad ad, boolean b) {
+
+    }
+
+    @Override
+    public void adLoadSucceeded(Ad ad) {
+
+    }
+
+    @Override
+    public void adShown(Ad ad, boolean b) {
+
+    }
+
+    @Override
+    public void noAdFound() {
+
     }
 
     private class LoadViewTask extends AsyncTask<Void, Void, Integer> {
