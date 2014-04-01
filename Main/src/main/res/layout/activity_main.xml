@@ -17,16 +17,51 @@
     </RelativeLayout>
 
     <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HDMI"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:text="HDMI Support"
         android:id="@+id/switch1"
-        android:textOn="@string/hdmi_enabled"
-        android:textOff="@string/hdmi_disabled"
+        android:textOn="@string/enabled"
+        android:textOff="@string/disabled"
+        android:checked="true"
+        android:gravity="center|center_vertical"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/white"/>
+    <Switch
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:text="CPU BOOST"
+        android:id="@+id/switchCPU"
+        android:textOn="@string/enabled"
+        android:textOff="@string/disabled"
         android:layout_centerVertical="true"
         android:checked="true"
-        android:onClick="changeHdmi"
-        android:gravity="center|center_vertical" />
+        android:gravity="center|center_vertical"
+        android:layout_below="@+id/switch1"
+        android:textColor="@android:color/white"/>
+    <Switch
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:text="GPU BOOST"
+        android:id="@+id/switchGPU"
+        android:textOn="@string/enabled"
+        android:textOff="@string/disabled"
+        android:layout_centerVertical="true"
+        android:checked="true"
+        android:gravity="center|center_vertical"
+        android:layout_below="@id/switchCPU"
+        android:textColor="@android:color/white"/>
+    
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_below="@+id/switchGPU"
+        android:text="@string/apply"
+        android:gravity="center"
+        android:onClick="applyOnClick"
+        android:textColor="@android:color/black"
+        android:background="@android:color/holo_green_dark"/>
 
     <TextView
         android:layout_width="wrap_content"

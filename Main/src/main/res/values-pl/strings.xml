@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Irbis HDMI Switcher</string>
-    <string name="app_descr">Aplikacja służy do włączania/wyłączania obsługi HDMI w systemie.\nNie jest to to samo co przełącznik w ustawieniach systemu.\nPo wyłaczeniu HDMI w tej aplikacji Twój tablet nie będzie obsługiwał złącza HDMI.\n\nWyłączenie obsługi HDMI w systemie nieznacznie ale jednak podnosi jego wydajność, dlatego zaleca się użycie tej opcji gdy nie zamierzasz korzystać z HDMI.\n\nZmiana tego ustawienia wymaga restartu urządzenia, pamiętaj też że możesz je zmieniać w dowolnej chwili.</string>
-    <string name="hdmi_enabled">HDMI włączone</string>
-    <string name="hdmi_disabled">HDMI wyłączone</string>
+    <string name="app_name">Irbis Tweaks</string>
+    <string name="app_descr">Aplikacja służy do włączania/wyłączania obsługi HDMI w systemie.\nNie jest to to samo co przełącznik w ustawieniach systemu.\nPo wyłaczeniu HDMI w tej aplikacji Twój tablet nie będzie obsługiwał złącza HDMI.\n\nWyłączenie obsługi HDMI w systemie nieznacznie ale jednak podnosi jego wydajność, dlatego zaleca się użycie tej opcji gdy nie zamierzasz korzystać z HDMI.\n\nPrzełączniki CPU/GPU Boost służą do przełączania tych układów w tryb maksymalnej wydajności.</string>
+    <string name="enabled">Włączone</string>
+    <string name="disabled">Wyłączone</string>
     <string name="noroot">Nie uzyskano uprawnień superuser !</string>
     <string name="reboot_title">Restart</string>
-    <string name="confirm">Aby zmiany odniosły skutek należy zrestartować urządzenie. Czy chcesz wykonać resrt teraz ?</string>
+    <string name="confirm">Aby zmiany odniosły skutek należy zrestartować urządzenie. Czy chcesz wykonać restart teraz ?</string>
     <string name="yes">TAK</string>
     <string name="no">NIE</string>
     <string name="download_error">Błąd podczas pobierania wymaganych plików. Upewnij się że posiadasz stabilne połączenie z internetem i zrestartuj aplikację. Mógł wystąpić chwilowy problem z serwerem pobierania, spróbuj ponownie za 10 min.</string>
-    <string name="no_network">Wymagane jest połączenie z internetem by pobrać wymagane biblioteki HDMI (ok. 65 KB). Połącz się z internetem i zrestartuj aplikację.</string>
+    <string name="no_network">Wymagane jest połączenie z internetem by pobrać wymagane biblioteki HDMI (ok. 80 KB). Połącz się z internetem i zrestartuj aplikację.</string>
     <string name="donate">Postaw piwo :)</string>
     <string name="progress_title">Pobieranie...</string>
     <string name="progress_text">Pobieranie wymaganych bibliotek...</string>
+    <string name="apply">Zastosuj zmiany</string>
+    <string name="update_notify">\n\nIrbis HDMI Switcher to teraz Irbis Tweaks !\n\n Nowe mozliwości:\nCPU Boost - Taktowanie 1.2GHz\nGPU Boost - Maksymalna wydajność grafiki\n\n</string>
+    <string name="error_msg">Poprzednie zamknięcie aplikacji było nieoczekiwane.\nCzy zgadzasz się wysłać raport z tego błędu ?</string>
 </resources>

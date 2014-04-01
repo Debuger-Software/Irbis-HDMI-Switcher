@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Irbis HDMI Switcher</string>
-    <string name="app_descr">This app can enable/disable HDMI support in Irbis ROM.\nThis is not the HDMI switch on/off like the switch in system settings.\nIf you switch HDMI to disable in this app then your device is not support HDMI.\n\nDisable HDMI support in this ROM slightly but still raises the system performance, it is recommended when you don\'t use HDMI all the time.\n\nIf this settings is changed, device reboot is required, remember - you can chcange this settings at any time.</string>
-    <string name="hdmi_enabled">HDMI enabled</string>
-    <string name="hdmi_disabled">HDMI disabled</string>
+    <string name="app_name">Irbis Tweaks</string>
+    <string name="app_descr">This app can enable/disable HDMI support in Irbis ROM.\nThis is not the HDMI switch on/off like the switch in system settings.\nIf you switch HDMI to disable in this app then your device is not support HDMI.\n\nDisable HDMI support in this ROM slightly but still raises the system performance, it is recommended when you don\'t use HDMI all the time.\n\nCPU and GPU Boost options switch your CPU/GPU to maximum performance.</string>
+    <string name="enabled">enabled</string>
+    <string name="disabled">disabled</string>
     <string name="noroot">SuperUser permissions revoked !</string>
     <string name="reboot_title">Reboot</string>
     <string name="confirm">To apply changes device must be rebooted. Reboot now ?</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="download_error">Error while downloading required file(s). Make sure you have stable internet connection and restart appliction ! May be a temporary problem with the download server, try again in 10 minutes.</string>
-    <string name="no_network">Internet connection is required to download HDMI libraries (~65KB)! Enable internet connection and restart app.</string>
+    <string name="no_network">Internet connection is required to download HDMI libraries (~80KB)! Enable internet connection and restart app.</string>
     <string name="donate">Buy me a beer :)</string>
     <string name="progress_title">Downloading...</string>
     <string name="progress_text">Downloading required libs...</string>
+    <string name="apply">Apply changes</string>
+    <string name="update_notify">\n\nIrbis HDMI Switcher is now Irbis Tweaks !\n\n New features:\nCPU Boost - Boost to 1.2 GHz\nGPU Boost - GPU max performance\n\n</string>
+    <string name="error_msg">Previous application shutdown was unexpected.\nDo you want to send error report?</string>
+
 </resources>
